@@ -50,11 +50,14 @@ public class CommandParser {
                 return CommandType.GO;
 
             case "profile":
+            case "p":
                 return CommandType.PROFILE;
             case "inventory":
+            case "i":
                 return CommandType.INVENTORY;
 
             case "help":
+            case "h":
                 return CommandType.HELP;
 
             default:

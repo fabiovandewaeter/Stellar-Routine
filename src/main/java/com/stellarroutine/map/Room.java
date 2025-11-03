@@ -53,10 +53,10 @@ public class Room {
         description += "Name: " + name + "\n";
         description += "Entities: [";
         for (int i = 0; i < entities.size(); i++) {
-            description += entities.get(i).getName();
-            if (i < entities.size() - 1) {
+            if (i >= 1) {
                 description += ", ";
             }
+            description += entities.get(i).getName();
         }
         description += "]\n";
         description += "Neighbors: [";

@@ -1,6 +1,8 @@
 package com.stellarroutine.core;
 
 import com.stellarroutine.entities.Player;
+import com.stellarroutine.items.Item;
+import com.stellarroutine.items.ItemType;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
 
@@ -11,12 +13,13 @@ public class Main {
         Room room3 = new Room("room3");
         defaultRoom.addNeighbor(Direction.NORTH, room2);
         defaultRoom.addNeighbor(Direction.WEST, room3);
-
         room2.addNeighbor(Direction.SOUTH, defaultRoom);
-
         room3.addNeighbor(Direction.EAST, defaultRoom);
 
         Player player = new Player("Bebou", defaultRoom);
+        Item item = new Item(ItemType.WEAPON, "Iron Sword");
+        player.addItem(item);
+
         Game game = new Game(player);
 
         game.run();

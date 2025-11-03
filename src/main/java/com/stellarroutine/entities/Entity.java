@@ -1,5 +1,6 @@
 package com.stellarroutine.entities;
 
+import com.stellarroutine.items.Item;
 import com.stellarroutine.map.Room;
 
 public class Entity {
@@ -22,6 +23,14 @@ public class Entity {
 
     public String getName() {
         return name;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void addItem(Item item) {
+        inventory.addItem(item);
     }
 
     public Room getCurrentRoom() {

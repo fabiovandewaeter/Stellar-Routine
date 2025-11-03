@@ -24,7 +24,6 @@ public class Game {
             if (command.getType() == null) {
                 continue;
             }
-
             switch (command.getType()) {
                 case LOOK:
                     executeLook(command);
@@ -112,6 +111,7 @@ public class Game {
     }
 
     private void executeInventory(Command command) {
+        System.out.println(entityManager.getPlayer().getInventory());
     }
 
     private void executeHelp() {

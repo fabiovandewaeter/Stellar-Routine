@@ -55,10 +55,7 @@ public class Game {
     }
 
     private void executeLook(Command command) {
-        if (command.getTarget().isEmpty()) {
-            System.out.println("Look at what ?");
-        } else {
-        }
+        System.out.println(entityManager.getPlayer().getCurrentRoom());
     }
 
     private void executeExamine(Command command) {

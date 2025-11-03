@@ -3,6 +3,7 @@ package com.stellarroutine.core;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
 import com.stellarroutine.items.ItemType;
+import com.stellarroutine.map.Chest;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
 
@@ -15,6 +16,9 @@ public class Main {
         defaultRoom.addNeighbor(Direction.WEST, room3);
         room2.addNeighbor(Direction.SOUTH, defaultRoom);
         room3.addNeighbor(Direction.EAST, defaultRoom);
+
+        Chest chest = new Chest("chest");
+        defaultRoom.addStructure(chest);
 
         Player player = new Player("Bebou", defaultRoom);
         Item item = new Item(ItemType.WEAPON, "Iron Sword");

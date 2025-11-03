@@ -1,20 +1,16 @@
 package com.stellarroutine.core;
 
 public enum CommandType {
-    // list things in the current room
     LOOK("look - List things in the current room"),
-    // examine an object
     EXAMINE("examine [target] - Examine an object"),
-    // take an object
     TAKE("take [target] - Take an object"),
-    // take to an NPC
+    DROP("drop [target] - Drop an object on the floor or in an openned chest"),
+    OPEN("open [target] - Open a chest (ex: open 2)"),
+    CLOSE("close - Close the current chest"),
     TALK("talk [target] - Talk to an NPC"),
-    // go to another room
     GO("go [target] - Go to another room (ex: go north, go 5,5)"),
 
-    // player's profile
     PROFILE("profile - Player's profile"),
-    // player's inventory
     INVENTORY("inventory - Player's inventory"),
 
     HELP("help - List commands");

@@ -1,7 +1,7 @@
 package com.stellarroutine.items;
 
 public class Item {
-    private ItemType type;
+    private final ItemType type;
     private String name;
 
     public Item(ItemType type, String name) {

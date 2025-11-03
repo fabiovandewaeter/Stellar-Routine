@@ -1,5 +1,6 @@
 package com.stellarroutine.map;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,13 +10,15 @@ import com.stellarroutine.entities.Entity;
 
 public class Room {
     private String name;
-    private List<Entity> entities;
-    private Map<Direction, Room> neighbors;
+    private final List<Entity> entities;
+    private final Map<Direction, Room> neighbors;
+    private final List<Structure> structures;
 
     public Room(String name) {
         this.name = name;
         this.entities = new ArrayList<>();
         this.neighbors = new HashMap<>();
+        this.structures = new ArrayList<>();
     }
 
     public void addEntity(Entity entity) {
@@ -46,31 +49,40 @@ public class Room {
         this.neighbors.put(direction, neighbor);
     }
 
+    public void addStructure(Structure structure) {
+        structures.add(structure);
+    }
+
+    public Structure getStructure(int index) {
+        if (index >= structures.size()) {
+            return null;
+        }
+        return structures.get(index);
+    }
+
+    public List<Structure> getStructures() {
+        return structures;
+    }
+
     public String toString() {
         String description = "";
 
         description += "== Room description ==\n";
         description += "Name: " + name + "\n";
-        description += "Entities: [";
+        description += "[ENTITIES]\n";
         for (int i = 0; i < entities.size(); i++) {
-            if (i >= 1) {
-                description += ", ";
-            }
-            description += entities.get(i).getName();
+            description += "- " + entities.get(i).getName() + "\n";
         }
-        description += "]\n";
-        description += "Neighbors: [";
-        int counter = 0;
+        description += "[EXITS]\n";
         for (Direction direction : Direction.values()) {
             if (neighbors.get(direction) != null) {
-                if (counter >= 1) {
-                    description += ", ";
-                }
-                description += neighbors.get(direction).getName();
-                counter++;
+                description += direction + ". " + neighbors.get(direction).getName() + "\n";
             }
         }
-        description += "]\n";
+        description += "[STRUCTURES]\n";
+        for (int i = 0; i < structures.size(); i++) {
+            description += i + ". " + structures.get(i).getName() + "\n";
+        }
 
         return description;
     }

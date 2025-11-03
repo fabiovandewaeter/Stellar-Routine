@@ -3,7 +3,7 @@ package com.stellarroutine.core;
 import java.util.Scanner;
 
 public class CommandParser {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public CommandParser() {
         this.scanner = new Scanner(System.in);
@@ -31,11 +31,19 @@ public class CommandParser {
     private CommandType findCommandType(String commandTypeWord) {
         switch (commandTypeWord) {
             case "look":
+            case "ls":
                 return CommandType.LOOK;
             case "examine":
                 return CommandType.EXAMINE;
             case "take":
                 return CommandType.TAKE;
+            case "drop":
+                return CommandType.DROP;
+            case "open":
+            case "cd":
+                return CommandType.OPEN;
+            case "close":
+                return CommandType.CLOSE;
             case "talk":
                 return CommandType.TALK;
             case "go":

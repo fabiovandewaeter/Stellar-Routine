@@ -6,7 +6,7 @@ import java.util.List;
 import com.stellarroutine.items.Item;
 
 public class Inventory {
-    private List<Item> items;
+    private final List<Item> items;
 
     public Inventory() {
         this.items = new ArrayList<>();
@@ -16,27 +16,31 @@ public class Inventory {
         items.add(item);
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Item getItem(int index) {
+        if (index >= items.size()) {
+            return null;
+        }
+        return items.get(index);
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void removeItem(int index) {
+        if (index < items.size()) {
+            items.remove(index);
+        }
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     public String toString() {
         String description = "";
 
-        description += "== Inventory ==\n";
-        description += "Items: [";
+        description += "== Inventory description ==\n";
+        description += "[ITEMS]\n";
         for (int i = 0; i < items.size(); i++) {
-            if (i >= 1) {
-                description += ", ";
-            }
-            Item item = items.get(i);
-            description += item.getName() + " | " + item.getType();
+            description += i + ". " + items.get(i).getName() + "\n";
         }
-        description += "]\n";
 
         return description;
     }

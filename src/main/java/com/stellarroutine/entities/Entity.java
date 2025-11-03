@@ -5,7 +5,7 @@ import com.stellarroutine.map.Room;
 
 public class Entity {
     protected String name;
-    protected Inventory inventory;
+    protected final Inventory inventory;
     protected long credits;
     protected Room currentRoom;
 

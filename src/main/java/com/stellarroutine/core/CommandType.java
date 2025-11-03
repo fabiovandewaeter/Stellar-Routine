@@ -8,7 +8,7 @@ public enum CommandType {
     OPEN("open [target] - Open a chest (ex: open 2)"),
     CLOSE("close - Close the current chest"),
     TALK("talk [target] - Talk to an NPC"),
-    GO("go [target] - Go to another room (ex: go north, go 5,5)"),
+    GO("go [target] - Go to another room (ex: go north, go 0)"),
 
     PROFILE("profile - Player's profile"),
     INVENTORY("inventory - Player's inventory"),

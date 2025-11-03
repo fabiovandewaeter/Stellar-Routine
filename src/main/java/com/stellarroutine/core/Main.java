@@ -12,10 +12,13 @@ public class Main {
         Room defaultRoom = new Room("default");
         Room room2 = new Room("room2");
         Room room3 = new Room("room3");
+        Room house = new Room("house");
         defaultRoom.addNeighbor(Direction.NORTH, room2);
         defaultRoom.addNeighbor(Direction.WEST, room3);
+        defaultRoom.addNeighbor(house);
         room2.addNeighbor(Direction.SOUTH, defaultRoom);
         room3.addNeighbor(Direction.EAST, defaultRoom);
+        house.addNeighbor(defaultRoom);
 
         Chest chest = new Chest("chest");
         defaultRoom.addStructure(chest);

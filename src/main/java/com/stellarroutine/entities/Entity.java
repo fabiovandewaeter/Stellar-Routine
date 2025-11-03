@@ -41,6 +41,12 @@ public class Entity {
         this.currentRoom = currentRoom;
     }
 
+    public void changeRoom(Room newRoom) {
+        currentRoom.removeEntity(this);
+        newRoom.addEntity(this);
+        this.setCurrentRoom(newRoom);
+    }
+
     public String toString() {
         String description = "";
 

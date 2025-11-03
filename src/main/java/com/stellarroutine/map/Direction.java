@@ -21,7 +21,6 @@ public enum Direction {
             case "w":
                 return Direction.WEST;
             default:
-                System.out.println("from(): Unknown direction");
                 return null;
         }
     }

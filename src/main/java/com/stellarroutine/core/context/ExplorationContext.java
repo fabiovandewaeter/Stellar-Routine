@@ -63,63 +63,67 @@ public class ExplorationContext implements Context {
 
     private void executeExamine(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Examine what ?");
-        } else {
+            return;
         }
     }
 
     private void executeTake(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Take what ?");
-        } else {
+            return;
         }
     }
 
     private void executeOpen(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Open what ?");
+            return;
+        }
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        Structure chest = currentRoom.getStructure(Integer.parseInt(target));
+        if (chest instanceof Chest) {
+            chest.interact(game);
         } else {
-            Room currentRoom = game.getPlayer().getCurrentRoom();
-            Structure chest = currentRoom.getStructure(Integer.parseInt(target));
-            if (chest instanceof Chest) {
-                chest.interact(game);
-            } else {
-                System.out.println("executeOpen(): can not open because the structure is not a Chest");
-            }
+            System.out.println("executeOpen(): can not open because the structure is not a Chest");
         }
     }
 
     private void executeTalk(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("To to who ?");
-        } else {
+            return;
         }
     }
 
     private void executeGo(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Go where ?");
+            return;
+        }
+        Player player = game.getPlayer();
+        Room currentRoom = player.getCurrentRoom();
+        Direction direction = Direction.from(command.getTarget());
+        Room newRoom = null;
+        if (direction != null) {
+            newRoom = currentRoom.getNeighbor(direction);
         } else {
-            Direction direction = Direction.from(command.getTarget());
-            if (direction == null) {
-                System.out.println("executeGo(): Unknown target");
-                return;
+            try {
+                int index = Integer.parseInt(target);
+                newRoom = currentRoom.getExit(index);
+            } catch (NumberFormatException ignored) {
             }
-            Player player = game.getPlayer();
-            Room currentRoom = player.getCurrentRoom();
-            Room newRoom = currentRoom.getNeighbor(direction);
-            if (newRoom == null) {
-                System.out.println("executeGo(): destination inaccessible");
-                return;
-            }
-            currentRoom.removeEntity(player);
-            newRoom.addEntity(player);
-            player.setCurrentRoom(newRoom);
+        }
+
+        if (newRoom != null) {
+            player.changeRoom(newRoom);
+        } else {
+            System.out.println("executeGo(): Unknown target");
         }
     }
 

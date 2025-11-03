@@ -65,35 +65,35 @@ public class ChestContext implements Context {
 
     private void executeExamine(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Examine what ?");
-        } else {
+            return;
         }
     }
 
     private void executeTake(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Take what ?");
-        } else {
-            int index = Integer.parseInt(target);
-            Item item = chest.getItem(index);
-            chest.removeItem(index);
-            game.getPlayer().addItem(item);
+            return;
         }
+        int index = Integer.parseInt(target);
+        Item item = chest.getItem(index);
+        chest.removeItem(index);
+        game.getPlayer().addItem(item);
     }
 
     private void executeDrop(Command command, Game game) {
         String target = command.getTarget();
-        if (target.isEmpty()) {
+        if (target == null || target.isEmpty()) {
             System.out.println("Drop what ?");
-        } else {
-            int index = Integer.parseInt(target);
-            Player player = game.getPlayer();
-            Item item = player.getInventory().getItem(index);
-            player.getInventory().removeItem(index);
-            chest.addItem(item);
+            return;
         }
+        int index = Integer.parseInt(target);
+        Player player = game.getPlayer();
+        Item item = player.getInventory().getItem(index);
+        player.getInventory().removeItem(index);
+        chest.addItem(item);
     }
 
     private void executeClose(Command command, Game game) {

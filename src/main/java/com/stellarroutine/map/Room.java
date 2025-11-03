@@ -1,6 +1,5 @@
 package com.stellarroutine.map;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +11,14 @@ public class Room {
     private String name;
     private final List<Entity> entities;
     private final Map<Direction, Room> neighbors;
+    private final List<Room> exits;
     private final List<Structure> structures;
 
     public Room(String name) {
         this.name = name;
         this.entities = new ArrayList<>();
         this.neighbors = new HashMap<>();
+        this.exits = new ArrayList<>();
         this.structures = new ArrayList<>();
     }
 
@@ -45,8 +46,19 @@ public class Room {
         return neighbors;
     }
 
+    public void addNeighbor(Room neighbor) {
+        exits.add(neighbor);
+    }
+
     public void addNeighbor(Direction direction, Room neighbor) {
-        this.neighbors.put(direction, neighbor);
+        neighbors.put(direction, neighbor);
+    }
+
+    public Room getExit(int index) {
+        if (index >= exits.size()) {
+            return null;
+        }
+        return exits.get(index);
     }
 
     public void addStructure(Structure structure) {
@@ -78,6 +90,9 @@ public class Room {
             if (neighbors.get(direction) != null) {
                 description += direction + ". " + neighbors.get(direction).getName() + "\n";
             }
+        }
+        for (int i = 0; i < exits.size(); i++) {
+            description += i + ". " + exits.get(i).getName() + "\n";
         }
         description += "[STRUCTURES]\n";
         for (int i = 0; i < structures.size(); i++) {

@@ -3,5 +3,9 @@
 
 ```bash
 mvn clean compile
-mvn exec:java
+mvn -q compile exec:java
 ```
+
+## Description
+
+- REPL inspired by MUD

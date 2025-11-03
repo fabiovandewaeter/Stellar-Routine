@@ -17,8 +17,7 @@ public enum CommandType {
     // player's inventory
     INVENTORY("inventory - Player's inventory"),
 
-    HELP("help - List commands"),
-    NULL("Unknown command");
+    HELP("help - List commands");
 
     private final String description;
 

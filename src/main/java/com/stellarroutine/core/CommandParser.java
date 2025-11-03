@@ -14,7 +14,7 @@ public class CommandParser {
         String cleanedInput = input.toLowerCase().trim();
 
         if (cleanedInput.isEmpty()) {
-            return new Command(CommandType.NULL, null);
+            return new Command(null, null);
         }
 
         String[] words = cleanedInput.split("\\s+");
@@ -29,40 +29,30 @@ public class CommandParser {
     }
 
     private CommandType findCommandType(String commandTypeWord) {
-        CommandType commandType = CommandType.NULL;
-
         switch (commandTypeWord) {
             case "look":
-                commandType = CommandType.LOOK;
-                break;
+                return CommandType.LOOK;
             case "examine":
-                commandType = CommandType.EXAMINE;
-                break;
+                return CommandType.EXAMINE;
             case "take":
-                commandType = CommandType.TAKE;
-                break;
+                return CommandType.TAKE;
             case "talk":
-                commandType = CommandType.TALK;
-                break;
+                return CommandType.TALK;
             case "go":
-                commandType = CommandType.GO;
-                break;
+                return CommandType.GO;
 
             case "profile":
-                commandType = CommandType.PROFILE;
-                break;
+                return CommandType.PROFILE;
             case "inventory":
-                commandType = CommandType.INVENTORY;
-                break;
+                return CommandType.INVENTORY;
 
             case "help":
-                commandType = CommandType.HELP;
-                break;
+                return CommandType.HELP;
 
             default:
                 break;
         }
 
-        return commandType;
+        return null;
     }
 }

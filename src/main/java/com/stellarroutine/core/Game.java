@@ -2,6 +2,8 @@ package com.stellarroutine.core;
 
 import com.stellarroutine.entities.EntityManager;
 import com.stellarroutine.entities.Player;
+import com.stellarroutine.map.Direction;
+import com.stellarroutine.map.Room;
 
 public class Game {
     private EntityManager entityManager;
@@ -19,6 +21,10 @@ public class Game {
         while (running) {
             System.out.print("> ");
             Command command = commandParser.parse();
+            if (command.getType() == null) {
+                continue;
+            }
+
             switch (command.getType()) {
                 case LOOK:
                     executeLook(command);
@@ -83,7 +89,21 @@ public class Game {
         if (command.getTarget().isEmpty()) {
             System.out.println("Go where ?");
         } else {
-            // go to target if possible
+            Direction direction = Direction.from(command.getTarget());
+            if (direction == null) {
+                System.out.println("executeGo(): Unknown target");
+                return;
+            }
+            Player player = entityManager.getPlayer();
+            Room currentRoom = player.getCurrentRoom();
+            Room newRoom = currentRoom.getNeighbor(direction);
+            if (newRoom == null) {
+                System.out.println("executeGo(): destination inaccessible");
+                return;
+            }
+            currentRoom.removeEntity(player);
+            newRoom.addEntity(player);
+            player.setCurrentRoom(newRoom);
         }
     }
 

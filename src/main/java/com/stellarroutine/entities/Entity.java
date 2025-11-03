@@ -12,7 +12,6 @@ public class Entity {
         this.name = name;
         this.inventory = new Inventory();
         this.credits = 0;
-        // this.currentRoom = spawningRoom;
         enterRoom(spawningRoom);
     }
 
@@ -27,6 +26,10 @@ public class Entity {
 
     public Room getCurrentRoom() {
         return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     public String toString() {

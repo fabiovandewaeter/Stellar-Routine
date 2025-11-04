@@ -1,6 +1,8 @@
 package com.stellarroutine.items;
 
-public class Item {
+import com.stellarroutine.core.Printable;
+
+public class Item implements Printable {
     private final ItemType type;
     private String name;
 

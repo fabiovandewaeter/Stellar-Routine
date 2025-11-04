@@ -1,9 +1,10 @@
 package com.stellarroutine.entities;
 
+import com.stellarroutine.core.Printable;
 import com.stellarroutine.items.Item;
 import com.stellarroutine.map.Room;
 
-public class Entity {
+public class Entity implements Printable {
     protected String name;
     protected final Inventory inventory;
     protected long credits;

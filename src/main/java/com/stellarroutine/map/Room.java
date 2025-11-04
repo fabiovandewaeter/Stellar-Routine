@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.stellarroutine.core.Printable;
 import com.stellarroutine.entities.Entity;
 
-public class Room {
+public class Room implements Printable {
     private String name;
     private final List<Entity> entities;
     private final Map<Direction, Room> neighbors;
@@ -77,28 +78,26 @@ public class Room {
     }
 
     public String toString() {
-        String description = "";
-
-        description += "== Room description ==\n";
-        description += "Name: " + name + "\n";
-        description += "[ENTITIES]\n";
-        for (int i = 0; i < entities.size(); i++) {
-            description += "- " + entities.get(i).getName() + "\n";
-        }
-        description += "[EXITS]\n";
+        String directionRoomDescription = "";
         for (Direction direction : Direction.values()) {
             if (neighbors.get(direction) != null) {
-                description += direction + ". " + neighbors.get(direction).getName() + "\n";
+                directionRoomDescription += " * (" + direction + ") " + neighbors.get(direction).getName() + "\n";
             }
         }
-        for (int i = 0; i < exits.size(); i++) {
-            description += i + ". " + exits.get(i).getName() + "\n";
-        }
-        description += "[STRUCTURES]\n";
-        for (int i = 0; i < structures.size(); i++) {
-            description += i + ". " + structures.get(i).getName() + "\n";
-        }
+        return String.format("""
+                == Room description ==
+                Name: %s
 
-        return description;
+                [ENTITIES] (talk)
+                %s
+                [EXITS] (go)
+                %s%s
+                [STRUCTURES] (open)
+                %s""",
+                name,
+                Printable.prettyPrintIndexedList(entities),
+                directionRoomDescription,
+                Printable.prettyPrintIndexedList(exits),
+                Printable.prettyPrintIndexedList(structures));
     }
 }

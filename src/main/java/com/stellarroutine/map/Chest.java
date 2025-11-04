@@ -1,6 +1,7 @@
 package com.stellarroutine.map;
 
 import com.stellarroutine.core.Game;
+import com.stellarroutine.core.Printable;
 import com.stellarroutine.core.context.ChestContext;
 import com.stellarroutine.entities.Inventory;
 import com.stellarroutine.items.Item;
@@ -35,14 +36,11 @@ public class Chest extends Structure {
     }
 
     public String toString() {
-        String description = "";
+        return String.format("""
+                == Chest description ==
 
-        description += "== Chest description ==\n";
-        description += "[ITEMS]\n";
-        for (int i = 0; i < inventory.getItems().size(); i++) {
-            description += i + ". " + inventory.getItems().get(i).getName() + "\n";
-        }
-
-        return description;
+                [ITEMS] (take) (drop)
+                %s""",
+                Printable.prettyPrintIndexedList(inventory.getItems()));
     }
 }

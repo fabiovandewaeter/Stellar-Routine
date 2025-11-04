@@ -79,8 +79,10 @@ public class ChestContext implements Context {
         }
         int index = Integer.parseInt(target);
         Item item = chest.getItem(index);
-        chest.removeItem(index);
-        game.getPlayer().addItem(item);
+        if (item != null) {
+            chest.removeItem(index);
+            game.getPlayer().addItem(item);
+        }
     }
 
     private void executeDrop(Command command, Game game) {
@@ -92,8 +94,10 @@ public class ChestContext implements Context {
         int index = Integer.parseInt(target);
         Player player = game.getPlayer();
         Item item = player.getInventory().getItem(index);
-        player.getInventory().removeItem(index);
-        chest.addItem(item);
+        if (item != null) {
+            player.getInventory().removeItem(index);
+            chest.addItem(item);
+        }
     }
 
     private void executeClose(Command command, Game game) {

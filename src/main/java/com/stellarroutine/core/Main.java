@@ -3,10 +3,11 @@ package com.stellarroutine.core;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
 import com.stellarroutine.items.ItemType;
-import com.stellarroutine.map.Chest;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
 import com.stellarroutine.map.ScrapSpawnManger;
+import com.stellarroutine.map.structures.Chest;
+import com.stellarroutine.map.structures.Recycler;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,6 +24,8 @@ public class Main {
 
         Chest chest = new Chest("chest");
         defaultRoom.addStructure(chest);
+        Recycler recycler = new Recycler("recycler");
+        defaultRoom.addStructure(recycler);
 
         Player player = new Player("Bebou", defaultRoom);
         player.addCredit(100000000);

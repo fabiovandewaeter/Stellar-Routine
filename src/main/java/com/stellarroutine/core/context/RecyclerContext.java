@@ -5,32 +5,27 @@ import com.stellarroutine.core.CommandType;
 import com.stellarroutine.core.Game;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
-import com.stellarroutine.map.structures.Chest;
 
-public class ChestContext implements Context {
-    private final Chest chest;
+public class RecyclerContext implements Context {
 
-    public ChestContext(Chest chest) {
-        this.chest = chest;
+    public RecyclerContext() {
     }
 
     @Override
     public String getPrompt(Game game) {
-        return "[Chest]> ";
+        return "[Recycler]> ";
     }
 
     @Override
     public boolean handle(Command command, Game game) {
         switch (command.getType()) {
             case LOOK:
-                executeLook(command, game);
-                return true;
+                return false;
             case EXAMINE:
                 executeExamine(command, game);
                 return true;
             case TAKE:
-                executeTake(command, game);
-                return true;
+                return false;
             case DROP:
                 executeDrop(command, game);
                 return true;
@@ -61,30 +56,18 @@ public class ChestContext implements Context {
         return false;
     }
 
-    private void executeLook(Command command, Game game) {
-        System.out.println(chest);
-    }
-
     private void executeExamine(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
             System.out.println("Examine what ?");
             return;
         }
-    }
-
-    private void executeTake(Command command, Game game) {
-        String target = command.getTarget();
-        if (target == null || target.isEmpty()) {
-            System.out.println("Take what ?");
-            return;
-        }
         try {
             int index = Integer.parseInt(target);
-            Item item = chest.getItem(index);
+            Player player = game.getPlayer();
+            Item item = player.getInventory().getItem(index);
             if (item != null) {
-                chest.removeItem(index);
-                game.getPlayer().addItem(item);
+                System.out.println(item);
             }
         } catch (NumberFormatException ignored) {
         }
@@ -99,10 +82,11 @@ public class ChestContext implements Context {
         try {
             int index = Integer.parseInt(target);
             Player player = game.getPlayer();
-            Item item = player.getInventory().getItem(index);
+            Item item = player.getItem(index);
             if (item != null) {
-                player.getInventory().removeItem(index);
-                chest.addItem(item);
+                int credits = 200;
+                player.addCredit(credits);
+                player.removeItem(index);
             }
         } catch (NumberFormatException ignored) {
         }

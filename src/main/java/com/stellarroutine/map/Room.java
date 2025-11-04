@@ -9,6 +9,7 @@ import com.stellarroutine.core.Printable;
 import com.stellarroutine.entities.Entity;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
+import com.stellarroutine.map.structures.Structure;
 
 public class Room implements Printable {
     private String name;

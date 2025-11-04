@@ -71,7 +71,7 @@ public class InventoryContext implements Context {
         try {
             int index = Integer.parseInt(target);
             Player player = game.getPlayer();
-            Item item = player.getInventory().getItem(index);
+            Item item = player.getItem(index);
             if (item != null) {
                 System.out.println(item);
             }
@@ -88,11 +88,11 @@ public class InventoryContext implements Context {
         try {
             int index = Integer.parseInt(target);
             Player player = game.getPlayer();
-            Item item = player.getInventory().getItem(index);
+            Item item = player.getItem(index);
             if (item != null) {
                 Room room = player.getCurrentRoom();
                 if (room != null) {
-                    player.getInventory().removeItem(index);
+                    player.removeItem(index);
                     room.addItem(item);
                 }
             }

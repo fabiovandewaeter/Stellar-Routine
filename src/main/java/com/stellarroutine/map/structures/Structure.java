@@ -1,4 +1,4 @@
-package com.stellarroutine.map;
+package com.stellarroutine.map.structures;
 
 import com.stellarroutine.core.Game;
 import com.stellarroutine.core.Printable;

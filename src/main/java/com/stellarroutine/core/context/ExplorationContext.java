@@ -5,10 +5,10 @@ import com.stellarroutine.core.CommandType;
 import com.stellarroutine.core.Game;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
-import com.stellarroutine.map.Chest;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
-import com.stellarroutine.map.Structure;
+import com.stellarroutine.map.structures.Chest;
+import com.stellarroutine.map.structures.Structure;
 
 public class ExplorationContext implements Context {
 
@@ -75,7 +75,7 @@ public class ExplorationContext implements Context {
         try {
             int index = Integer.parseInt(target);
             Player player = game.getPlayer();
-            Item item = player.getInventory().getItem(index);
+            Item item = player.getItem(index);
             if (item != null) {
                 System.out.println(item);
             }
@@ -93,7 +93,7 @@ public class ExplorationContext implements Context {
             int index = Integer.parseInt(target);
             Player player = game.getPlayer();
             Room room = player.getCurrentRoom();
-            Item item = player.getCurrentRoom().getItem(index);
+            Item item = room.getItem(index);
             if (item != null) {
                 room.removeItem(index);
                 player.addItem(item);
@@ -111,12 +111,8 @@ public class ExplorationContext implements Context {
         try {
             int index = Integer.parseInt(target);
             Room currentRoom = game.getPlayer().getCurrentRoom();
-            Structure chest = currentRoom.getStructure(index);
-            if (chest instanceof Chest) {
-                chest.interact(game);
-            } else {
-                System.out.println("executeOpen(): can not open because the structure is not a Chest");
-            }
+            Structure structure = currentRoom.getStructure(index);
+            structure.interact(game);
         } catch (NumberFormatException ignored) {
         }
     }

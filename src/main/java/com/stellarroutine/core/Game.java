@@ -7,19 +7,24 @@ import com.stellarroutine.core.context.Context;
 import com.stellarroutine.core.context.ExplorationContext;
 import com.stellarroutine.entities.EntityManager;
 import com.stellarroutine.entities.Player;
+import com.stellarroutine.map.ScrapSpawnManger;
 
 public class Game {
     private final EntityManager entityManager;
     private boolean running;
     private final CommandParser commandParser;
     private final Deque<Context> contexts;
+    private ScrapSpawnManger scrapSpawnManger;
+    private long currentTimeMinutes;
 
-    public Game(Player player) {
+    public Game(Player player, ScrapSpawnManger scrapSpawnManger) {
         this.entityManager = new EntityManager(player);
         this.running = true;
         this.commandParser = new CommandParser();
         this.contexts = new ArrayDeque<>();
         this.contexts.push(new ExplorationContext());
+        this.scrapSpawnManger = scrapSpawnManger;
+        this.currentTimeMinutes = 0;
     }
 
     public void run() {
@@ -30,6 +35,7 @@ public class Game {
             if (command.getType() == null) {
                 continue;
             }
+            currentTimeMinutes += 5;
             contexts.peek().handle(command, this);
         }
     }
@@ -48,5 +54,13 @@ public class Game {
 
     public void popContext() {
         contexts.pop();
+    }
+
+    public ScrapSpawnManger getScrapSpawnManger() {
+        return scrapSpawnManger;
+    }
+
+    public long getCurrentTimeMinutes() {
+        return currentTimeMinutes;
     }
 }

@@ -4,6 +4,7 @@ import com.stellarroutine.core.Command;
 import com.stellarroutine.core.CommandType;
 import com.stellarroutine.core.Game;
 import com.stellarroutine.entities.Player;
+import com.stellarroutine.items.Item;
 import com.stellarroutine.map.Chest;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
@@ -61,6 +62,7 @@ public class ExplorationContext implements Context {
     }
 
     private void executeLook(Command command, Game game) {
+        game.getScrapSpawnManger().spawnScrap(game, game.getPlayer().getCurrentRoom());
         System.out.println(game.getPlayer().getCurrentRoom());
     }
 
@@ -70,6 +72,15 @@ public class ExplorationContext implements Context {
             System.out.println("Examine what ?");
             return;
         }
+        try {
+            int index = Integer.parseInt(target);
+            Player player = game.getPlayer();
+            Item item = player.getInventory().getItem(index);
+            if (item != null) {
+                System.out.println(item);
+            }
+        } catch (NumberFormatException ignored) {
+        }
     }
 
     private void executeTake(Command command, Game game) {
@@ -77,6 +88,17 @@ public class ExplorationContext implements Context {
         if (target == null || target.isEmpty()) {
             System.out.println("Take what ?");
             return;
+        }
+        try {
+            int index = Integer.parseInt(target);
+            Player player = game.getPlayer();
+            Room room = player.getCurrentRoom();
+            Item item = player.getCurrentRoom().getItem(index);
+            if (item != null) {
+                room.removeItem(index);
+                player.addItem(item);
+            }
+        } catch (NumberFormatException ignored) {
         }
     }
 
@@ -86,12 +108,16 @@ public class ExplorationContext implements Context {
             System.out.println("Open what ?");
             return;
         }
-        Room currentRoom = game.getPlayer().getCurrentRoom();
-        Structure chest = currentRoom.getStructure(Integer.parseInt(target));
-        if (chest instanceof Chest) {
-            chest.interact(game);
-        } else {
-            System.out.println("executeOpen(): can not open because the structure is not a Chest");
+        try {
+            int index = Integer.parseInt(target);
+            Room currentRoom = game.getPlayer().getCurrentRoom();
+            Structure chest = currentRoom.getStructure(index);
+            if (chest instanceof Chest) {
+                chest.interact(game);
+            } else {
+                System.out.println("executeOpen(): can not open because the structure is not a Chest");
+            }
+        } catch (NumberFormatException ignored) {
         }
     }
 

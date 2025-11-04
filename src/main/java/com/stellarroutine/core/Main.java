@@ -6,6 +6,7 @@ import com.stellarroutine.items.ItemType;
 import com.stellarroutine.map.Chest;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
+import com.stellarroutine.map.ScrapSpawnManger;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,7 +29,8 @@ public class Main {
         Item item = new Item(ItemType.WEAPON, "Iron Sword");
         player.addItem(item);
 
-        Game game = new Game(player);
+        ScrapSpawnManger scrapSpawnManger = new ScrapSpawnManger(1.0, 10, 3);
+        Game game = new Game(player, scrapSpawnManger);
 
         game.run();
     }

@@ -35,8 +35,16 @@ public class Entity implements Printable {
         return inventory;
     }
 
+    public void removeItem(int index) {
+        inventory.removeItem(index);
+    }
+
     public void addItem(Item item) {
         inventory.addItem(item);
+    }
+
+    public Item getItem(int index) {
+        return inventory.getItem(index);
     }
 
     public long getCredits() {

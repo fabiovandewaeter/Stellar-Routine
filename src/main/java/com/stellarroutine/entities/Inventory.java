@@ -18,7 +18,7 @@ public class Inventory {
     }
 
     public Item getItem(int index) {
-        if (index >= items.size()) {
+        if (index < 0 || index >= items.size()) {
             return null;
         }
         return items.get(index);

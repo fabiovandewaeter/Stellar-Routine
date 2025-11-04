@@ -72,7 +72,7 @@ public class Room implements Printable {
     }
 
     public Room getExit(int index) {
-        if (index >= exits.size()) {
+        if (index < 0 || index >= exits.size()) {
             return null;
         }
         return exits.get(index);
@@ -83,7 +83,7 @@ public class Room implements Printable {
     }
 
     public Structure getStructure(int index) {
-        if (index >= structures.size()) {
+        if (index < 0 || index >= structures.size()) {
             return null;
         }
         return structures.get(index);
@@ -95,6 +95,19 @@ public class Room implements Printable {
 
     public void addItem(Item item) {
         items.add(item);
+    }
+
+    public void removeItem(int index) {
+        if (index < 0 || index >= items.size()) {
+            items.remove(index);
+        }
+    }
+
+    public Item getItem(int index) {
+        if (index < 0 || index >= items.size()) {
+            return null;
+        }
+        return items.get(index);
     }
 
     public List<Item> getItems() {

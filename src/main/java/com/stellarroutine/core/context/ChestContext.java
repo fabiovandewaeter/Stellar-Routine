@@ -79,11 +79,14 @@ public class ChestContext implements Context {
             System.out.println("Take what ?");
             return;
         }
-        int index = Integer.parseInt(target);
-        Item item = chest.getItem(index);
-        if (item != null) {
-            chest.removeItem(index);
-            game.getPlayer().addItem(item);
+        try {
+            int index = Integer.parseInt(target);
+            Item item = chest.getItem(index);
+            if (item != null) {
+                chest.removeItem(index);
+                game.getPlayer().addItem(item);
+            }
+        } catch (NumberFormatException ignored) {
         }
     }
 
@@ -93,12 +96,15 @@ public class ChestContext implements Context {
             System.out.println("Drop what ?");
             return;
         }
-        int index = Integer.parseInt(target);
-        Player player = game.getPlayer();
-        Item item = player.getInventory().getItem(index);
-        if (item != null) {
-            player.getInventory().removeItem(index);
-            chest.addItem(item);
+        try {
+            int index = Integer.parseInt(target);
+            Player player = game.getPlayer();
+            Item item = player.getInventory().getItem(index);
+            if (item != null) {
+                player.getInventory().removeItem(index);
+                chest.addItem(item);
+            }
+        } catch (NumberFormatException ignored) {
         }
     }
 

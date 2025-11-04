@@ -47,7 +47,8 @@ public class InventoryContext implements Context {
                 executeProfile(command, game);
                 return true;
             case INVENTORY:
-                return false;
+                executeClose(command, game);
+                return true;
 
             case HELP:
                 executeHelp(game);
@@ -67,11 +68,14 @@ public class InventoryContext implements Context {
             System.out.println("Examine what ?");
             return;
         }
-        int index = Integer.parseInt(target);
-        Player player = game.getPlayer();
-        Item item = player.getInventory().getItem(index);
-        if (item != null) {
-            System.out.println(item);
+        try {
+            int index = Integer.parseInt(target);
+            Player player = game.getPlayer();
+            Item item = player.getInventory().getItem(index);
+            if (item != null) {
+                System.out.println(item);
+            }
+        } catch (NumberFormatException ignored) {
         }
     }
 
@@ -81,15 +85,18 @@ public class InventoryContext implements Context {
             System.out.println("Drop what ?");
             return;
         }
-        int index = Integer.parseInt(target);
-        Player player = game.getPlayer();
-        Item item = player.getInventory().getItem(index);
-        if (item != null) {
-            Room room = player.getCurrentRoom();
-            if (room != null) {
-                player.getInventory().removeItem(index);
-                room.addItem(item);
+        try {
+            int index = Integer.parseInt(target);
+            Player player = game.getPlayer();
+            Item item = player.getInventory().getItem(index);
+            if (item != null) {
+                Room room = player.getCurrentRoom();
+                if (room != null) {
+                    player.getInventory().removeItem(index);
+                    room.addItem(item);
+                }
             }
+        } catch (NumberFormatException ignored) {
         }
     }
 

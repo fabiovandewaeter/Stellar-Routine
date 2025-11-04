@@ -41,6 +41,9 @@ public class ExplorationContext implements Context {
             case GO:
                 executeGo(command, game);
                 return true;
+            case BUY:
+                executeBuy(command, game);
+                return true;
 
             case PROFILE:
                 executeProfile(command, game);
@@ -127,11 +130,43 @@ public class ExplorationContext implements Context {
         }
     }
 
+    private void executeBuy(Command command, Game game) {
+        String target = command.getTarget();
+        if (target == null || target.isEmpty()) {
+            System.out.println("Buy what ?");
+            return;
+        }
+        Player player = game.getPlayer();
+        Room currentRoom = player.getCurrentRoom();
+        Direction direction = Direction.from(command.getTarget());
+        Room newRoom = null;
+        if (direction != null) {
+            newRoom = currentRoom.getNeighbor(direction);
+        } else {
+            try {
+                int index = Integer.parseInt(target);
+                newRoom = currentRoom.getExit(index);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        if (newRoom != null) {
+            if (newRoom.isBuyable()) {
+                player.buy(newRoom);
+            } else {
+                System.out.println("executeGo(): The target is not buyable");
+            }
+        } else {
+            System.out.println("executeGo(): Unknown target");
+        }
+    }
+
     private void executeProfile(Command command, Game game) {
         System.out.println(game.getPlayer());
     }
 
     private void executeInventory(Command command, Game game) {
+        game.pushContext(new InventoryContext());
         System.out.println(game.getPlayer().getInventory());
     }
 

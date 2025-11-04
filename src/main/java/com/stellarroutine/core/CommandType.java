@@ -9,6 +9,7 @@ public enum CommandType {
     CLOSE("close - Close the current chest"),
     TALK("talk [target] - Talk to an NPC"),
     GO("go [target] - Go to another room (ex: go north, go 0)"),
+    BUY("buy [target] - Buy a room"),
 
     PROFILE("profile - Player's profile"),
     INVENTORY("inventory - Player's inventory"),

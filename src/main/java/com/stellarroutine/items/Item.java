@@ -20,12 +20,11 @@ public class Item implements Printable {
     }
 
     public String toString() {
-        String description = "";
-
-        description += "== Item Descriptio n ==\n";
-        description += "Name: " + name + "\n";
-        description += "Item type: " + type.name() + "\n";
-
-        return description;
+        return String.format("""
+                == Item description ==
+                Name: %s
+                Type: %s""",
+                name,
+                type);
     }
 }

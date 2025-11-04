@@ -3,6 +3,7 @@ package com.stellarroutine.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.stellarroutine.core.Printable;
 import com.stellarroutine.items.Item;
 
 public class Inventory {
@@ -34,14 +35,11 @@ public class Inventory {
     }
 
     public String toString() {
-        String description = "";
+        return String.format("""
+                == Inventory description ==
 
-        description += "== Inventory description ==\n";
-        description += "[ITEMS]\n";
-        for (int i = 0; i < items.size(); i++) {
-            description += i + ". " + items.get(i).getName() + "\n";
-        }
-
-        return description;
+                [ITEMS] (examine) (drop)
+                %s""",
+                Printable.prettyPrintIndexedList(items));
     }
 }

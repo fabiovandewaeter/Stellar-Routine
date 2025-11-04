@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.stellarroutine.core.Printable;
 import com.stellarroutine.entities.Entity;
+import com.stellarroutine.entities.Player;
+import com.stellarroutine.items.Item;
 
 public class Room implements Printable {
     private String name;
@@ -14,6 +16,10 @@ public class Room implements Printable {
     private final Map<Direction, Room> neighbors;
     private final List<Room> exits;
     private final List<Structure> structures;
+    private final List<Item> items;
+    private Entity owner;
+    private boolean buyable;
+    private int price;
 
     public Room(String name) {
         this.name = name;
@@ -21,6 +27,16 @@ public class Room implements Printable {
         this.neighbors = new HashMap<>();
         this.exits = new ArrayList<>();
         this.structures = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.buyable = false;
+        this.price = -1;
+        this.owner = null;
+    }
+
+    public Room(String name, boolean buyable, int price) {
+        this(name);
+        this.buyable = buyable;
+        this.price = price;
     }
 
     public void addEntity(Entity entity) {
@@ -77,6 +93,48 @@ public class Room implements Printable {
         return structures;
     }
 
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void changeOwner(Entity newOwner) {
+        if (owner != null) {
+            owner.removeOwnedRoom(this);
+        }
+        owner = newOwner;
+    }
+
+    public Entity getOwner() {
+        return owner;
+    }
+
+    public boolean isBuyable() {
+        return buyable;
+    }
+
+    public void beBoughtBy(Entity buyer) {
+        if (buyer.getCredits() >= price) {
+            buyer.addOwnedRoom(this);
+            buyer.removeCredit(price);
+        }
+    }
+
+    public void setBuyable(boolean buyable) {
+        this.buyable = buyable;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String toString() {
         String directionRoomDescription = "";
         for (Direction direction : Direction.values()) {
@@ -84,20 +142,26 @@ public class Room implements Printable {
                 directionRoomDescription += " * (" + direction + ") " + neighbors.get(direction).getName() + "\n";
             }
         }
+        List<Entity> entitiesExceptPlayer = entities.stream()
+                .filter(e -> !(e instanceof Player))
+                .toList();
         return String.format("""
                 == Room description ==
                 Name: %s
 
                 [ENTITIES] (talk)
                 %s
-                [EXITS] (go)
+                [EXITS] (go) (buy)
                 %s%s
                 [STRUCTURES] (open)
+                %s
+                [ITEMS] (take)
                 %s""",
                 name,
-                Printable.prettyPrintIndexedList(entities),
+                Printable.prettyPrintIndexedList(entitiesExceptPlayer),
                 directionRoomDescription,
                 Printable.prettyPrintIndexedList(exits),
-                Printable.prettyPrintIndexedList(structures));
+                Printable.prettyPrintIndexedList(structures),
+                Printable.prettyPrintIndexedList(items));
     }
 }

@@ -5,18 +5,16 @@ import com.stellarroutine.core.CommandType;
 import com.stellarroutine.core.Game;
 import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
-import com.stellarroutine.map.Chest;
+import com.stellarroutine.map.Room;
 
-public class ChestContext implements Context {
-    private final Chest chest;
+public class InventoryContext implements Context {
 
-    public ChestContext(Chest chest) {
-        this.chest = chest;
+    public InventoryContext() {
     }
 
     @Override
     public String getPrompt(Game game) {
-        return "[Chest]> ";
+        return "[Inventory]> ";
     }
 
     @Override
@@ -29,8 +27,7 @@ public class ChestContext implements Context {
                 executeExamine(command, game);
                 return true;
             case TAKE:
-                executeTake(command, game);
-                return true;
+                return false;
             case DROP:
                 executeDrop(command, game);
                 return true;
@@ -50,8 +47,7 @@ public class ChestContext implements Context {
                 executeProfile(command, game);
                 return true;
             case INVENTORY:
-                executeInventory(command, game);
-                return true;
+                return false;
 
             case HELP:
                 executeHelp(game);
@@ -62,7 +58,7 @@ public class ChestContext implements Context {
     }
 
     private void executeLook(Command command, Game game) {
-        System.out.println(chest);
+        System.out.println(game.getPlayer().getInventory());
     }
 
     private void executeExamine(Command command, Game game) {
@@ -71,19 +67,11 @@ public class ChestContext implements Context {
             System.out.println("Examine what ?");
             return;
         }
-    }
-
-    private void executeTake(Command command, Game game) {
-        String target = command.getTarget();
-        if (target == null || target.isEmpty()) {
-            System.out.println("Take what ?");
-            return;
-        }
         int index = Integer.parseInt(target);
-        Item item = chest.getItem(index);
+        Player player = game.getPlayer();
+        Item item = player.getInventory().getItem(index);
         if (item != null) {
-            chest.removeItem(index);
-            game.getPlayer().addItem(item);
+            System.out.println(item);
         }
     }
 
@@ -97,8 +85,11 @@ public class ChestContext implements Context {
         Player player = game.getPlayer();
         Item item = player.getInventory().getItem(index);
         if (item != null) {
-            player.getInventory().removeItem(index);
-            chest.addItem(item);
+            Room room = player.getCurrentRoom();
+            if (room != null) {
+                player.getInventory().removeItem(index);
+                room.addItem(item);
+            }
         }
     }
 
@@ -108,10 +99,6 @@ public class ChestContext implements Context {
 
     private void executeProfile(Command command, Game game) {
         System.out.println(game.getPlayer());
-    }
-
-    private void executeInventory(Command command, Game game) {
-        System.out.println(game.getPlayer().getInventory());
     }
 
     private void executeHelp(Game game) {

@@ -48,6 +48,8 @@ public class CommandParser {
                 return CommandType.TALK;
             case "go":
                 return CommandType.GO;
+            case "buy":
+                return CommandType.BUY;
 
             case "profile":
             case "p":

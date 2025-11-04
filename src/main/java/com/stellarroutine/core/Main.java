@@ -12,7 +12,7 @@ public class Main {
         Room defaultRoom = new Room("default");
         Room room2 = new Room("room2");
         Room room3 = new Room("room3");
-        Room house = new Room("house");
+        Room house = new Room("house", true, 10000);
         defaultRoom.addNeighbor(Direction.NORTH, room2);
         defaultRoom.addNeighbor(Direction.WEST, room3);
         defaultRoom.addNeighbor(house);
@@ -24,6 +24,7 @@ public class Main {
         defaultRoom.addStructure(chest);
 
         Player player = new Player("Bebou", defaultRoom);
+        player.addCredit(100000000);
         Item item = new Item(ItemType.WEAPON, "Iron Sword");
         player.addItem(item);
 

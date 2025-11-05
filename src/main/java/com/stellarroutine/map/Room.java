@@ -100,8 +100,9 @@ public class Room implements Printable {
 
     public void removeItem(int index) {
         if (index < 0 || index >= items.size()) {
-            items.remove(index);
+            return;
         }
+        items.remove(index);
     }
 
     public Item getItem(int index) {

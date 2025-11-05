@@ -32,7 +32,7 @@ public class Main {
         Item item = new Item(ItemType.WEAPON, "Iron Sword");
         player.addItem(item);
 
-        ScrapSpawnManger scrapSpawnManger = new ScrapSpawnManger(1.0, 10, 3);
+        ScrapSpawnManger scrapSpawnManger = new ScrapSpawnManger(0.5, 50, 1);
         Game game = new Game(player, scrapSpawnManger);
 
         game.run();

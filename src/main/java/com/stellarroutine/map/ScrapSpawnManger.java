@@ -42,7 +42,7 @@ public class ScrapSpawnManger {
 
         double roll = ThreadLocalRandom.current().nextDouble();
         if (roll < scrapSpawnChance) {
-            room.addItem(new Item(ItemType.SCRAP, "scrap"));
+            room.addItem(new Item(ItemType.SCRAP, "scrap", 200));
             lastSpawnByRoom.put(room, now);
             return;
         }

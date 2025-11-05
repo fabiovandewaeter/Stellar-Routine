@@ -84,9 +84,10 @@ public class RecyclerContext implements Context {
             Player player = game.getPlayer();
             Item item = player.getItem(index);
             if (item != null) {
-                int credits = 200;
-                player.addCredit(credits);
+                int resalePrice = item.getResalePrice();
+                player.addCredit(resalePrice);
                 player.removeItem(index);
+                System.out.println(" + " + resalePrice + " credits");
             }
         } catch (NumberFormatException ignored) {
         }

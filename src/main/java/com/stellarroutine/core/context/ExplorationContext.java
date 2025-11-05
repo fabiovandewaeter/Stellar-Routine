@@ -7,7 +7,6 @@ import com.stellarroutine.entities.Player;
 import com.stellarroutine.items.Item;
 import com.stellarroutine.map.Direction;
 import com.stellarroutine.map.Room;
-import com.stellarroutine.map.structures.Chest;
 import com.stellarroutine.map.structures.Structure;
 
 public class ExplorationContext implements Context {

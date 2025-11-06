@@ -62,13 +62,13 @@ public class ExplorationContext implements Context {
 
     private void executeLook(Command command, Game game) {
         game.getScrapSpawnManger().spawnScrap(game, game.getPlayer().getCurrentRoom());
-        System.out.println(game.getPlayer().getCurrentRoom());
+        game.setPreviousResult(game.getPlayer().getCurrentRoom().toString());
     }
 
     private void executeExamine(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("Examine what ?");
+            game.setPreviousResult("Examine what ?");
             return;
         }
         try {
@@ -76,7 +76,7 @@ public class ExplorationContext implements Context {
             Player player = game.getPlayer();
             Item item = player.getItem(index);
             if (item != null) {
-                System.out.println(item);
+                game.setPreviousResult(item.toString());
             }
         } catch (NumberFormatException ignored) {
         }
@@ -85,7 +85,7 @@ public class ExplorationContext implements Context {
     private void executeTake(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("Take what ?");
+            game.setPreviousResult("Take what ?");
             return;
         }
         try {
@@ -104,7 +104,7 @@ public class ExplorationContext implements Context {
     private void executeOpen(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("Open what ?");
+            game.setPreviousResult("Open what ?");
             return;
         }
         try {
@@ -119,7 +119,7 @@ public class ExplorationContext implements Context {
     private void executeTalk(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("To to who ?");
+            game.setPreviousResult("To to who ?");
             return;
         }
     }
@@ -127,7 +127,7 @@ public class ExplorationContext implements Context {
     private void executeGo(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("Go where ?");
+            game.setPreviousResult("Go where ?");
             return;
         }
         Player player = game.getPlayer();
@@ -147,14 +147,14 @@ public class ExplorationContext implements Context {
         if (newRoom != null) {
             player.changeRoom(newRoom);
         } else {
-            System.out.println("executeGo(): Unknown target");
+            game.setPreviousResult("executeGo(): Unknown target");
         }
     }
 
     private void executeBuy(Command command, Game game) {
         String target = command.getTarget();
         if (target == null || target.isEmpty()) {
-            System.out.println("Buy what ?");
+            game.setPreviousResult("Buy what ?");
             return;
         }
         Player player = game.getPlayer();
@@ -175,23 +175,23 @@ public class ExplorationContext implements Context {
             if (newRoom.isBuyable()) {
                 player.buy(newRoom);
             } else {
-                System.out.println("executeGo(): The target is not buyable");
+                game.setPreviousResult("executeGo(): The target is not buyable");
             }
         } else {
-            System.out.println("executeGo(): Unknown target");
+            game.setPreviousResult("executeGo(): Unknown target");
         }
     }
 
     private void executeProfile(Command command, Game game) {
-        System.out.println(game.getPlayer());
+        game.setPreviousResult(game.getPlayer().toString());
     }
 
     private void executeInventory(Command command, Game game) {
         game.pushContext(new InventoryContext());
-        System.out.println(game.getPlayer().getInventory());
+        game.setPreviousResult(game.getPlayer().getInventory().toString());
     }
 
     private void executeHelp(Game game) {
-        System.out.println(CommandType.printHelp());
+        game.setPreviousResult(CommandType.printHelp());
     }
 }

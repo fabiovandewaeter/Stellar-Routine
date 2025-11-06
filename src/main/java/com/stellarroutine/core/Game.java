@@ -16,6 +16,7 @@ public class Game {
     private final Deque<Context> contexts;
     private ScrapSpawnManger scrapSpawnManger;
     private long currentTimeMinutes;
+    private String previousResult;
 
     public Game(Player player, ScrapSpawnManger scrapSpawnManger) {
         this.entityManager = new EntityManager(player);
@@ -25,11 +26,20 @@ public class Game {
         this.contexts.push(new ExplorationContext());
         this.scrapSpawnManger = scrapSpawnManger;
         this.currentTimeMinutes = 0;
+        this.previousResult = "";
+    }
+
+    public static void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public void run() {
+        clearConsole();
         System.out.println("== Start ==");
         while (running) {
+            clearConsole();
+            System.out.println(previousResult);
             System.out.print(contexts.peek().getPrompt(this));
             Command command = commandParser.parse();
             if (command.getType() == null) {
@@ -62,5 +72,9 @@ public class Game {
 
     public long getCurrentTimeMinutes() {
         return currentTimeMinutes;
+    }
+
+    public void setPreviousResult(String previousResult) {
+        this.previousResult = previousResult;
     }
 }

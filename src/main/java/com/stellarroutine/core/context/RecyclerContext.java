@@ -20,25 +20,31 @@ public class RecyclerContext implements Context {
     public boolean handle(Command command, Game game) {
         switch (command.getType()) {
             case LOOK:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case EXAMINE:
                 executeExamine(command, game);
                 return true;
             case TAKE:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case DROP:
                 executeDrop(command, game);
                 return true;
             case OPEN:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case CLOSE:
                 executeClose(command, game);
                 return true;
             case TALK:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case GO:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case BUY:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
 
             case PROFILE:
@@ -52,7 +58,7 @@ public class RecyclerContext implements Context {
                 executeHelp(game);
                 return true;
         }
-        game.setPreviousResult("Unknown command");
+        game.setPreviousResult("Command does nothing in this context");
         return false;
     }
 
@@ -68,6 +74,8 @@ public class RecyclerContext implements Context {
             Item item = player.getInventory().getItem(index);
             if (item != null) {
                 game.setPreviousResult(item.toString());
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -88,6 +96,8 @@ public class RecyclerContext implements Context {
                 player.addCredit(resalePrice);
                 player.removeItem(index);
                 game.setPreviousResult(" + " + resalePrice + " credits");
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -95,6 +105,7 @@ public class RecyclerContext implements Context {
 
     private void executeClose(Command command, Game game) {
         game.popContext();
+        game.setPreviousResult("");
     }
 
     private void executeProfile(Command command, Game game) {

@@ -29,12 +29,14 @@ public class ExplorationContext implements Context {
                 executeTake(command, game);
                 return true;
             case DROP:
-                return true;
+                game.setPreviousResult("Command does nothing in this context");
+                return false;
             case OPEN:
                 executeOpen(command, game);
                 return true;
             case CLOSE:
-                return true;
+                game.setPreviousResult("Command does nothing in this context");
+                return false;
             case TALK:
                 executeTalk(command, game);
                 return true;
@@ -57,6 +59,7 @@ public class ExplorationContext implements Context {
                 return true;
         }
 
+        game.setPreviousResult("Command does nothing in this context");
         return false;
     }
 
@@ -77,6 +80,8 @@ public class ExplorationContext implements Context {
             Item item = player.getItem(index);
             if (item != null) {
                 game.setPreviousResult(item.toString());
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -96,6 +101,8 @@ public class ExplorationContext implements Context {
             if (item != null) {
                 room.removeItem(index);
                 player.addItem(item);
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -112,6 +119,7 @@ public class ExplorationContext implements Context {
             Room currentRoom = game.getPlayer().getCurrentRoom();
             Structure structure = currentRoom.getStructure(index);
             structure.interact(game);
+            game.setPreviousResult("");
         } catch (NumberFormatException ignored) {
         }
     }
@@ -121,6 +129,8 @@ public class ExplorationContext implements Context {
         if (target == null || target.isEmpty()) {
             game.setPreviousResult("To to who ?");
             return;
+        } else {
+            game.setPreviousResult("Command did nothing");
         }
     }
 

@@ -27,20 +27,25 @@ public class InventoryContext implements Context {
                 executeExamine(command, game);
                 return true;
             case TAKE:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case DROP:
                 executeDrop(command, game);
                 return true;
             case OPEN:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case CLOSE:
                 executeClose(command, game);
                 return true;
             case TALK:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case GO:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case BUY:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
 
             case PROFILE:
@@ -54,7 +59,7 @@ public class InventoryContext implements Context {
                 executeHelp(game);
                 return true;
         }
-        game.setPreviousResult("Unknown command");
+        game.setPreviousResult("Command does nothing in this context");
         return false;
     }
 
@@ -74,7 +79,10 @@ public class InventoryContext implements Context {
             Item item = player.getItem(index);
             if (item != null) {
                 game.setPreviousResult(item.toString());
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
+
         } catch (NumberFormatException ignored) {
         }
     }
@@ -94,6 +102,8 @@ public class InventoryContext implements Context {
                 if (room != null) {
                     player.removeItem(index);
                     room.addItem(item);
+                } else {
+                    game.setPreviousResult("Command did nothing");
                 }
             }
         } catch (NumberFormatException ignored) {
@@ -102,6 +112,7 @@ public class InventoryContext implements Context {
 
     private void executeClose(Command command, Game game) {
         game.popContext();
+        game.setPreviousResult("");
     }
 
     private void executeProfile(Command command, Game game) {

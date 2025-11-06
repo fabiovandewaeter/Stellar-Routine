@@ -35,15 +35,19 @@ public class ChestContext implements Context {
                 executeDrop(command, game);
                 return true;
             case OPEN:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case CLOSE:
                 executeClose(command, game);
                 return true;
             case TALK:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case GO:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
             case BUY:
+                game.setPreviousResult("Command does nothing in this context");
                 return false;
 
             case PROFILE:
@@ -57,7 +61,7 @@ public class ChestContext implements Context {
                 executeHelp(game);
                 return true;
         }
-        game.setPreviousResult("Unknown command");
+        game.setPreviousResult("Command does nothing in this context");
         return false;
     }
 
@@ -85,6 +89,8 @@ public class ChestContext implements Context {
             if (item != null) {
                 chest.removeItem(index);
                 game.getPlayer().addItem(item);
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -103,6 +109,8 @@ public class ChestContext implements Context {
             if (item != null) {
                 player.getInventory().removeItem(index);
                 chest.addItem(item);
+            } else {
+                game.setPreviousResult("Command did nothing");
             }
         } catch (NumberFormatException ignored) {
         }
@@ -110,6 +118,7 @@ public class ChestContext implements Context {
 
     private void executeClose(Command command, Game game) {
         game.popContext();
+        game.setPreviousResult("");
     }
 
     private void executeProfile(Command command, Game game) {
